@@ -3,18 +3,19 @@
 sudo yum update -y
 sudo amazon-linux-extras install docker
 sudo service docker start
+y
 sudo usermod -a -G docker ec2-user
 pwd
 mkdir downloads
-cd downloads/
+cd downloads
 
 -- Gib Bash --
 ls
-chmod 600 key-pair-fastapi.pem
+chmod 600 key-pair-fastapi2.pem
 -- EC2 Connect
 pwd
 -- Gib Bash --
-scp -i key-pair-fastapi.pem Dockerfile fastapi_app.py requirements.txt ec2-user@<'public ip'>:/home/ec2-user/downloads
+scp -i key-pair-fastapi2.pem Dockerfile fastapi_app.py requirements.txt ec2-user@<'public ip'>:/home/ec2-user/downloads
 yes
 -- EC2 Connect
 ls
@@ -26,6 +27,18 @@ docker system prune
 docker system df
 docker whisper-api-img prune --all
 sudo apt-get clean
+
+-- EC2 Connect
+-- mount the volume
+lsblk
+sudo mkfs -t ext4 /dev/sdd
+sudo mkdir /mnt/data
+sudo mount /dev/sdd /mnt/data
+df -h
+
+-- automatic mount at boot
+echo '/dev/xvdd /mnt/data ext4 defaults,nofail 0 2' | sudo tee -a /etc/fstab  
+
 
 -- EC2 Connect
 sudo docker build -t whisper-api-img:v1.0 -f Dockerfile .
