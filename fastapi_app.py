@@ -1,6 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from starllete.middleware import Middleware
-from starllete.middleware.cors import CORSMiddleware
+from starlette.middleware import Middleware
+from starlette.middleware.cors import CORSMiddleware
 from typing import List
 from fastapi.responses import JSONResponse, RedirectResponse
 import whisper
