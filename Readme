@@ -1,0 +1,42 @@
+
+-- EC2 Connect
+sudo yum update -y
+sudo amazon-linux-extras install docker
+sudo service docker start
+sudo usermod -a -G docker ec2-user
+pwd
+mkdir downloads
+cd downloads/
+
+-- Gib Bash --
+ls
+chmod 600 key-pair-fastapi.pem
+-- EC2 Connect
+pwd
+-- Gib Bash --
+scp -i key-pair-fastapi.pem Dockerfile fastapi_app.py requirements.txt ec2-user@<'public ip'>:/home/ec2-user/downloads
+yes
+-- EC2 Connect
+ls
+
+-- EC2 Connect
+-- out of space
+docker system prune 
+
+docker system df
+docker whisper-api-img prune --all
+sudo apt-get clean
+
+-- EC2 Connect
+sudo docker build -t whisper-api-img:v1.0 -f Dockerfile .
+sudo docker images
+sudo docker run -d -p 80:8000 whipser-pi-img:v1.0 
+-- Browse --
+<'public ip'>
+-- EC2 Connect
+sudo docker ps
+sudo docker stop <'container id'>
+-- AWS Console
+stop or terminate instance
+
+
