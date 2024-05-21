@@ -12,7 +12,7 @@ torch.cuda.is_available()
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 # Load the Whisper model
-model = whisper.load_model("base", fp16=False)
+model = whisper.load_model("base", device=DEVICE)
 
 app = FastAPI(middleware[
     Middleware(CORSMiddleware, allow_origins=["*"],
