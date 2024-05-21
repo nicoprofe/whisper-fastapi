@@ -1,6 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
-from starlette.middleware import Middleware
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 from fastapi.responses import JSONResponse, RedirectResponse
 import whisper
@@ -14,12 +13,14 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 # Load the Whisper model
 model = whisper.load_model("base", device=DEVICE)
 
-app = FastAPI(middleware[
-    Middleware(CORSMiddleware, allow_origins=["*"],
-                allow_methods=["*"],
-                allow_headers=["*"])
+app = FastAPI()
 
-])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/whisper_local")
 async def transcribe_audio(files: List[UploadFile] = File( ... )):
